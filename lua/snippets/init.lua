@@ -1,0 +1,55 @@
+-- -- Load all snippets using LuaSnip loader
+-- require('luasnip.loaders.from_lua').lazy_load {
+--   paths = { vim.fn.stdpath 'config' .. '/lua/snippets' },
+-- }
+-- -- Auto-reload snippets on write
+-- -- Guard to prevent multiple autocommand registrations
+-- if not vim.g.snippet_reload_autocmd_set then
+--   vim.api.nvim_create_autocmd('BufWritePost', {
+--     pattern = '*/lua/snippets/**/*.lua',
+--     callback = function()
+--       local ls = require 'luasnip'
+--       ls.cleanup()
+--
+--       local reloaded_modules = {}
+--
+--       for module_name, _ in pairs(package.loaded) do
+--         if module_name:match '^snippets%.' then
+--           package.loaded[module_name] = nil
+--           table.insert(reloaded_modules, module_name)
+--         end
+--       end
+--
+--       -- Require each snippet module individually
+--       for _, mod in ipairs(reloaded_modules) do
+--         local ok, err = pcall(require, mod)
+--         if ok then
+--           vim.notify('Reloaded snippet module: ' .. mod, vim.log.levels.INFO)
+--         else
+--           vim.notify('Failed to reload snippet module: ' .. mod .. '\n' .. err, vim.log.levels.ERROR)
+--         end
+--       end
+--     end,
+--   })
+--
+--   vim.g.snippet_reload_autocmd_set = true
+-- end
+-- -- Collect all snippets in snippets/tex/
+-- local tex_snippet_path = vim.fn.stdpath 'config' .. '/lua/snippets/tex'
+-- local snippets = {}
+--
+-- for name, _ in vim.fs.dir(tex_snippet_path) do
+--   if name:match '%.lua$' then
+--     local module_name = 'snippets.tex.' .. name:gsub('%.lua$', '')
+--     local ok, mod = pcall(require, module_name)
+--     if ok and type(mod) == 'table' then
+--       vim.list_extend(snippets, mod)
+--     else
+--       vim.notify('Failed to load snippets from ' .. module_name, vim.log.levels.WARN)
+--     end
+--   end
+-- end
+--
+-- -- Return as a table so it can be added via ls.add_snippets
+-- return {
+--   tex = snippets,
