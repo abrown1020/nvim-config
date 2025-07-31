@@ -8,16 +8,10 @@ return {
     -- import mason
     local mason = require 'mason'
 
-    -- import mason-lspconfig
-    local mason_lspconfig = require 'mason-lspconfig'
-
-    -- import mason-tool-installer
-    local mason_tool_installer = require 'mason-tool-installer'
-
     -- enable mason and configure icons
     mason.setup {
       ui = {
-        backdrop = 100,
+        -- backdrop = 100,
         icons = {
           package_installed = '✓',
           package_pending = '➜',
@@ -26,32 +20,34 @@ return {
       },
     }
 
+    -- import mason-lspconfig
+    local mason_lspconfig = require 'mason-lspconfig'
     mason_lspconfig.setup {
       -- list of LSP servers to install
       ensure_installed = {
         'html',
         'lua_ls',
-        'pyright', -- Python LSP
-        'texlab', -- LaTeX LSP
-        -- 'ltex',
+        -- 'pyright', -- Python LSP
+        -- 'texlab', -- LaTeX LSP
+        'rust_analyzer', -- Rust LSP
       },
 
       automatic_installation = true,
       automatic_enable = true,
     }
 
+    -- import mason-tool-installer
+    local mason_tool_installer = require 'mason-tool-installer'
     mason_tool_installer.setup {
       ensure_installed = {
         -- Formatters
-        'prettier', -- JavaScript/HTML formatter
+        -- 'prettier', -- JavaScript/HTML formatter
         'stylua', -- Lua formatter
         'isort', -- Python import sorter
-        'black', -- Python formatter
-        'tex-fmt', -- Latex formatting
-
+        -- 'black', -- Python formatter
+        -- 'tex-fmt', -- Latex formatting
         -- Linters
-        'pylint', -- Python linter
-        -- "eslint_d",     -- JS linter
+        'ruff', -- Python linter
       },
     }
   end,

@@ -8,6 +8,7 @@ return {
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
     bigfile = { enabled = true },
+    vim.api.nvim_set_hl(0, 'SnacksNormal', { bg = 'NONE' }),
     cursor = {
       enabled = true,
       animation = 'slide',
@@ -34,8 +35,7 @@ return {
              █████████  ███    █████████████ █████ ██████████████   
             █████████ ██████████ █████████ █████ █████ ████ █████   
           ███████████ ███    ███ █████████ █████ █████ ████ █████  
-         ██████  █████████████████████ ████ █████ █████ ████ ██████ 
-      ]],
+         ██████  █████████████████████ ████ █████ █████ ████ ██████]],
       },
     },
     explorer = { enabled = false },
@@ -75,14 +75,14 @@ return {
       },
     },
     dim = { enabled = true },
-    highlight_overrides = {
-      texCmd = { fg = '#d79921', italic = true },
-      texMathZone = { fg = '#b8bb26' },
-      texSection = { fg = '#fe8019', bold = true },
-      texComment = { fg = '#928374', italic = true },
-      texRefZone = { fg = '#d3869b', italic = true },
-      texCite = { fg = '#d3869b', italic = true },
-    },
+    -- highlight_overrides = {
+    --   texCmd = { fg = '#d79921', italic = true },
+    --   texMathZone = { fg = '#b8bb26' },
+    --   texSection = { fg = '#fe8019', bold = true },
+    --   texComment = { fg = '#928374', italic = true },
+    --   texRefZone = { fg = '#d3869b', italic = true },
+    --   texCite = { fg = '#d3869b', italic = true },
+    -- },
   },
 
   keys = {

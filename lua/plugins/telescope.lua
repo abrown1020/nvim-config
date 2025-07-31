@@ -1,6 +1,13 @@
 return {
   'nvim-telescope/telescope.nvim',
-  event = 'VimEnter',
+  -- Tell Lazy when to load Telescsope
+  event = 'VeryLazy',
+  -- cmd = {
+  --   'Telescope',
+  --   'TelescopeFindFiles',
+  --   'TelescopeLiveGrep',
+  --   'TelescopeBuffers',
+  -- },
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -13,11 +20,12 @@ return {
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-telescope/telescope-file-browser.nvim' },
+    { 'debugloop/telescope-undo.nvim' },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
     local builtin = require 'telescope.builtin'
-    local action_state = require 'telescope.actions.state'
+    -- local action_state = require 'telescope.actions.state'
     local actions = require 'telescope.actions'
     local telescope = require 'telescope'
 
@@ -32,15 +40,8 @@ return {
           },
         },
       },
-      path_display = { 'tail' },
-      -- layout_strategy = 'horizontal',
-      -- layout_config = {
-      --   prompt_position = 'top',
-      --   preview_width = 0.6, -- % of total width
-      --   width = 0.9,
-      --   height = 0.8,
-      -- },
-      -- previewer = true,
+      style = 'nvchad',
+      path_display = { 'smart' },
       pickers = {
         buffers = {
           path_display = { 'tail' },
@@ -54,7 +55,7 @@ return {
         },
         find_files = {
           path_display = { 'smart' },
-          file_ignore_patterns = { 'node_modules', '%.git', '%.venv' },
+          file_ignore_patterns = { 'node_modules', '%.venv' },
           hidden = true,
         },
         live_grep = {
@@ -90,6 +91,19 @@ return {
             prompt_position = 'top',
           },
         },
+        ['undo'] = {
+          use_delta = true,
+          use_custom_command = nil,
+          side_by_side = false,
+          entry_format = 'state #ID, $STAT, $TIME',
+          mappings = {
+            i = {
+              ['<C-CR>'] = require('telescope-undo.actions').yank_additions,
+              ['<S-CR>'] = require('telescope-undo.actions').yank_deletions,
+              ['<CR>'] = require('telescope-undo.actions').restore,
+            },
+          },
+        },
       },
     }
 
@@ -97,6 +111,7 @@ return {
     pcall(telescope.load_extension, 'fzf')
     pcall(telescope.load_extension, 'ui-select')
     pcall(telescope.load_extension, 'file_browser')
+    pcall(telescope.load_extension, 'undo')
 
     -- Keymaps
     vim.keymap.set('n', '<leader>/', function()
@@ -121,5 +136,7 @@ return {
         select_buffer = true,
       }
     end, { desc = '[F]ile browser (buffer dir)' })
+
+    vim.keymap.set('n', '<leader>u', '<cmd>Telescope undo<CR>', { desc = '[U]ndo History (cwd)' })
   end,
 }

@@ -77,9 +77,9 @@ M = {
       [[
       \begin{problem}{<problem_number>}
       {
-          <claim>.
+          <claim>
       }
-          <proof>.
+          <proof>
       \end{problem}
       \newpage
     ]],
@@ -115,5 +115,68 @@ M = {
     )
   ),
 }
+
+local notes_class_snippets = {
+
+  autosnippet(
+    { trig = '-cbox', dscr = 'custom box' },
+    fmta(
+      [[
+      \begin{custombox}[<Title>]{<><label>}
+          <>
+      \end{custombox}
+      <>
+      ]],
+      {
+        Title = i(1, 'Title'),
+        c(2, {
+          t 'def:',
+          t 'dtr:',
+          t '',
+        }),
+        label = i(3, 'label'),
+        i(4),
+        i(0),
+      }
+    )
+  ),
+
+  autosnippet(
+    { trig = '-thm', dscr = 'custom thoerem environment' },
+    fmta(
+      [[
+      \begin{theorem}[<Title>]{thm:<label>}
+          <>
+      \end{theorem}
+      <>
+      ]],
+      {
+        Title = i(1, 'Title'),
+        label = i(2, 'label'),
+        i(3),
+        i(0),
+      }
+    )
+  ),
+
+  autosnippet(
+    { trig = '-def', dscr = 'custom definiton environment' },
+    fmta(
+      [[
+      \begin{definition}[<Title>]{thm:<label>}
+          <>
+      \end{definition}
+      <>
+      ]],
+      {
+        Title = i(1, 'Title'),
+        label = i(2, 'label'),
+        i(3),
+        i(0),
+      }
+    )
+  ),
+}
+vim.list_extend(M, notes_class_snippets)
 
 return M

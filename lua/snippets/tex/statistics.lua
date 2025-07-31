@@ -72,6 +72,15 @@ local statistics_snippets = {
       }
     )
   ),
+
+  s(
+    { trig = 'gaussRV', name = 'Normal Distribution' },
+    fmta([[ \mathcal{N}\left( <mean>, <cov> \right) <>]], {
+      mean = i(1, mean),
+      cov = i(2, cov),
+      i(0),
+    })
+  ),
 }
 
 return statistics_snippets

@@ -3,16 +3,10 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
-    'folke/lazydev.nvim',
     { 'antosha417/nvim-lsp-file-operations', config = true },
+    { 'folke/lazydev.nvim', opts = {} },
   },
   config = function()
-    -- import lspconfig plugin
-    local lspconfig = require 'lspconfig'
-
-    -- import mason_lspconfig plugin
-    local mason_lspconfig = require 'mason-lspconfig'
-
     -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require 'cmp_nvim_lsp'
 
@@ -52,11 +46,11 @@ return {
         opts.desc = 'Show line diagnostics'
         keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-        opts.desc = 'Go to previous diagnostic'
-        keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-        opts.desc = 'Go to next diagnostic'
-        keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+        -- opts.desc = 'Go to previous diagnostic'
+        -- keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+        --
+        -- opts.desc = 'Go to next diagnostic'
+        -- keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
         opts.desc = 'Show documentation for what is under cursor'
         keymap.set('n', 'K', vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
@@ -79,26 +73,63 @@ return {
       vim.fn.sign_define(name, { text = icon, texthl = name, numhl = '' })
     end
 
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          require('lspconfig')[server_name].setup {}
-        end,
-      },
-    }
-
-    require('lspconfig').texlab.setup {
+    -- local capabilities = cmp_nvim_lsp.default_capabilities()
+    -- vim.lsp.config('*', {
+    --   capabilities = capabilities,
+    -- })
+    --
+    -- require('mason-lspconfig').setup {
+    --   handlers = {
+    --     function(server_name)
+    --       require('lspconfig')[server_name].setup {}
+    --     end,
+    --   },
+    -- }
+    vim.lsp.config('texlab', {
       settings = {
         texlab = {
+          build = {
+            executable = 'latexmk',
+            args = {
+              '-pdf',
+              '-interaction=nonstopmode',
+              '-file-line-error',
+              '-silent',
+              '-synctex=1',
+              '-shell-escape',
+              '-outdir=build',
+              '%f',
+            },
+            forwardSearchAfter = true,
+            onSave = true,
+          },
           chktex = {
-            onEdit = true,
             onOpenAndSave = true,
+            onEdit = true,
+            additionalArgs = { '-n3' },
+          },
+          diagnosticsDelay = 300,
+          forwardSearch = {
+            executable = 'SumatraPDF',
+            args = {
+              '-reuse-instance',
+              '-forward-search',
+              'verbose',
+              'file-line-error',
+              '%p', -- path to PDF
+              '%f',
+              '%l', -- forward search to line
+              -- '-inverse-search',
+              -- [[nvim --headless -c "VimtexInverseSearch %f %l"]],
+            },
+          },
+          latexFormatter = 'latexindent',
+          latexindent = {
+            modifyLineBreaks = true,
           },
         },
       },
-    }
+    })
 
     -- used to enable autocompletion (assign to every lsp server config)
   end,

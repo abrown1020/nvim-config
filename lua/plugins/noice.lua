@@ -98,35 +98,35 @@ return {
       -- },
     }
 
-    -- Gruvbox-style border fixes for Noice cmdline popups
-    local set_hl = vim.api.nvim_set_hl
-    local bg = '#32302f'
-    local fg = '#7c6f64'
-
-    local border_groups = {
-      'NoiceCmdlinePopupBorderHelp',
-      'NoiceCmdlinePopupBorderCmdline',
-      'NoiceCmdlinePopupBorderFilter',
-      'NoiceCmdlinePopupBorderInput',
-      'NoiceCmdlinePopupBorderLua',
-      'NoiceCmdlinePopupBorderSearch',
-    }
-    local content_groups = {
-      'NoiceCmdlinePopup',
-      'NoiceCmdlinePopupCmdline',
-      'NoiceCmdlinePopupLua',
-      'NoiceCmdlinePopupHelp',
-      'NoiceCmdlinePopupInput',
-      'NoiceCmdlinePopupSearch',
-    }
-
-    for _, group in ipairs(border_groups) do
-      set_hl(0, group, { bg = bg, fg = fg })
-    end
-
-    for _, group in ipairs(content_groups) do
-      set_hl(0, group, { bg = bg, fg = '#ebdbb2' })
-    end
+    -- -- Gruvbox-style border fixes for Noice cmdline popups
+    -- local set_hl = vim.api.nvim_set_hl
+    -- local bg = '#32302f'
+    -- local fg = '#7c6f64'
+    --
+    -- local border_groups = {
+    --   'NoiceCmdlinePopupBorderHelp',
+    --   'NoiceCmdlinePopupBorderCmdline',
+    --   'NoiceCmdlinePopupBorderFilter',
+    --   'NoiceCmdlinePopupBorderInput',
+    --   'NoiceCmdlinePopupBorderLua',
+    --   'NoiceCmdlinePopupBorderSearch',
+    -- }
+    -- local content_groups = {
+    --   'NoiceCmdlinePopup',
+    --   'NoiceCmdlinePopupCmdline',
+    --   'NoiceCmdlinePopupLua',
+    --   'NoiceCmdlinePopupHelp',
+    --   'NoiceCmdlinePopupInput',
+    --   'NoiceCmdlinePopupSearch',
+    -- }
+    --
+    -- for _, group in ipairs(border_groups) do
+    --   set_hl(0, group, { bg = bg, fg = fg })
+    -- end
+    --
+    -- for _, group in ipairs(content_groups) do
+    --   set_hl(0, group, { bg = bg, fg = '#ebdbb2' })
+    -- end
 
     vim.notify = require 'notify'
   end,

@@ -118,7 +118,7 @@ M = {
       [[
     \sum<> <>
     ]],
-      { c(1, { fmta([[_{<>}^{<>}]], { i(1, 'i = 0'), i(2, '\\infty') }), t '' }), i(0) }
+      { c(1, { fmta([[_{<>}^{<>}]], { i(1, 'k = 1'), i(2, '\\infty') }), t '' }), i(0) }
     ),
     { condition = tex.in_math, show_condition = tex.in_math }
   ),
@@ -213,14 +213,15 @@ M = {
 
   autosnippet(
     { trig = 'EE', name = 'Expectation', dscr = 'Expectation Operator' },
-    fmta(
-      [[
-    \mathbb{E}\left[ <arg> \right]<>
-    ]],
-      { arg = i(1, 'arg'), i(0) }
-    ),
-    { condition = tex.in_math, show_condition = tex.in_math }
+    fmta([[\mathbb{E} <> <>]], {
+      c(1, {
+        fmta([[\left[ <arg> \right] <>]], { arg = i(1, 'arg'), i(0) }),
+        fmta([[\left( <arg> \right) <>]], { arg = i(1, 'arg'), i(0) }),
+      }),
+      i(0),
+    }, { condition = tex.in_math, show_condition = tex.in_math })
   ),
+
   autosnippet(
     { trig = 'PP', name = 'Probability', dscr = 'Probability Measure' },
     fmta(
@@ -262,6 +263,7 @@ local auto_backslash_specs = {
   'approx',
   'gcd',
   'var',
+  'cov',
 }
 
 local auto_backslash_snippets = {}
@@ -287,6 +289,7 @@ for _, name in ipairs(auto_backslash_specs) do
         end),
         c(1, {
           fmt([[\left( {} \right)]], i(1, 'arg')),
+          fmt([[\left( {}, {}\right)]], { i(1, 'arg1'), i(2, 'arg2') }),
           fmt([[ {} ]], i(1, 'arg')),
         }),
         i(0),
@@ -340,7 +343,7 @@ local symbol_specs = {
   ['>='] = { context = { name = '≥' }, command = [[\geq]] },
   ['<<'] = { context = { name = '<<' }, command = [[\ll]] },
   ['>>'] = { context = { name = '>>' }, command = [[\gg]] },
-  ['~~'] = { context = { name = '~' }, command = [[\sim]] },
+  ['~'] = { context = { name = '~' }, command = [[\sim]] },
   ['~='] = { context = { name = '≈' }, command = [[\approx]] },
   ['~-'] = { context = { name = '≃' }, command = [[\simeq]] },
   ['-~'] = { context = { name = '⋍' }, command = [[\backsimeq]] },
@@ -360,10 +363,11 @@ local symbol_specs = {
   iRR = { context = { name = 'inℝ', priority = 200 }, command = [[\in \mathbb{R}]] },
   RR = { context = { name = 'ℝ', priority = 100 }, command = [[\mathbb{R}]] },
   CC = { context = { name = 'ℂ' }, command = [[\mathbb{C}]] },
-  OO = { context = { name = '∅' }, command = [[\emptyset]] },
+  OO = { context = { name = '∅' }, command = [[\varnothing]] },
   pwr = { context = { name = 'P' }, command = [[\powerset]] },
   cc = { context = { name = '⊂' }, command = [[\subset]] },
-  cq = { context = { name = '⊆' }, command = [[\subseteq]] },
+  ['!cq'] = { context = { name = '⊆', priority = 200 }, command = [[\not\subseteq]] },
+  cq = { context = { name = '⊆', priority = 100 }, command = [[\subseteq]] },
   qq = { context = { name = '⊃' }, command = [[\supset]] },
   qc = { context = { name = '⊇' }, command = [[\supseteq]] },
   ['\\\\\\'] = { context = { name = '⧵' }, command = [[\setminus]] },
@@ -373,8 +377,8 @@ local symbol_specs = {
   -- quantifiers and logic stuffs
   AA = { context = { name = '∀' }, command = [[\forall]] },
   EX = { context = { name = '∃' }, command = [[\exists]] },
-  inn = { context = { name = '∈' }, command = [[\in]] },
-  notin = { context = { name = '∉' }, command = [[\not\in]] },
+  ['!inn'] = { context = { name = '∉', priority = 200 }, command = [[\not\in]] },
+  inn = { context = { name = '∈', priority = 100 }, command = [[\in]] },
   ['!-'] = { context = { name = '¬' }, command = [[\lnot]] },
   VV = { context = { name = '∨' }, command = [[\lor]] },
   WW = { context = { name = '∧' }, command = [[\land]] },
@@ -382,7 +386,7 @@ local symbol_specs = {
   ['=>'] = { context = { name = '⇒' }, command = [[\implies]] },
   ['=<'] = { context = { name = '⇐' }, command = [[\impliedby]] },
   iff = { context = { name = '⟺' }, command = [[\iff]] },
-  ['->'] = { context = { name = '→', priority = 250 }, command = [[\to]] },
+  ['-;'] = { context = { name = '→', priority = 250 }, command = [[\to]] },
   ['!>'] = { context = { name = '↦' }, command = [[\mapsto]] },
   ['<-'] = { context = { name = '↦', priority = 250 }, command = [[\gets]] },
   -- differentials

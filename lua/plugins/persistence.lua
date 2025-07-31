@@ -1,11 +1,25 @@
 return {
   'folke/persistence.nvim',
   event = 'BufReadPre', -- Load before buffers are read
+  priority = 500,
   config = function()
     require('persistence').setup {
       dir = vim.fn.stdpath 'state' .. '/sessions/',
       need = 1,
-      options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
+      options = {
+        'buffers',
+        'tabpages',
+        'curdir',
+        'winsize',
+      },
+      -- -- AUTO‑SAVE on every write:
+      -- vim.api.nvim_create_autocmd('BufWritePost', {
+      --   pattern = '*',
+      --   callback = function()
+      --     -- this will trigger PersistenceSavePre/SavePost
+      --     require('persistence').save()
+      --   end,
+      -- }),
     }
   end,
 

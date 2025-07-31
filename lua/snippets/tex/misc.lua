@@ -66,6 +66,7 @@ local misc_snippets = {
       trig = 'ssub',
       name = '\\subsubsection{}',
       dscr = 'subsubsection',
+      condition = line_begin,
       priority = 200,
     },
     fmta(
@@ -88,6 +89,7 @@ local misc_snippets = {
       trig = 'sub',
       name = '\\subsection{}',
       dscr = 'subsection',
+      condition = line_begin,
       priority = 100,
     },
     fmta(

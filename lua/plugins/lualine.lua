@@ -1,5 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
+  event = 'VeryLazy',
   config = function()
     local mode = {
       'mode',
@@ -24,7 +25,7 @@ return {
       sources = { 'nvim_diagnostic' },
       sections = { 'error', 'warn' },
       symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-      colored = false,
+      colored = true,
       update_in_insert = false,
       always_visible = false,
       cond = hide_in_width,
@@ -39,8 +40,10 @@ return {
 
     require('lualine').setup {
       options = {
+        theme = 'auto',
+        globalstatus = true,
         icons_enabled = true,
-        theme = 'gruvbox', -- Set theme based on environment variable
+        -- theme = 'gruvbox', -- Set theme based on environment variable
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
         --        

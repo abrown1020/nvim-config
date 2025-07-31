@@ -1,6 +1,8 @@
 return {
+
   'lervag/vimtex',
   lazy = false, -- ensure it's always loaded
+  -- event = 'BufReadPre',
   init = function()
     vim.opt.conceallevel = 2 -- 1 or 2; 2 hides the replacement char as well
     vim.opt.concealcursor = 'c' -- conceal in Normal & Visual modes
@@ -28,20 +30,20 @@ return {
     vim.g.vimtex_view_method = 'general'
     vim.g.vimtex_view_general_viewer = [[C:/Users/andbr/AppData/Local/SumatraPDF/SumatraPDF.exe]]
     vim.g.vimtex_view_general_options = [[-reuse-instance -forward-search @tex @line @pdf]]
+    vim.g.vimtex_quickfix_mode = 1
 
-    -- Compiler settings
+    -- -- Compiler settings
     vim.g.vimtex_compiler_method = 'latexmk'
-    vim.g.vimtex_quickfix_mode = 0 -- disable automatic quickfix
+    -- vim.g.vimtex_compiler_method = 'generic'
+    -- vim.g.vimtex_compiler_generic = {
+    -- command = [[latexmk -c -outdir=build; latexmk -pdf -interaction=nonstopmode -file-line-error -synctex=1 -shell-escape -outdir=build %:p]],
+    -- }
     vim.g.vimtex_compiler_latexmk = {
       aux_dir = 'build',
       out_dir = 'build',
       executable = 'latexmk',
-      options = {
-        '-verbose',
-        '-file-line-error',
-        '-synctex=1',
-        '-interaction=nonstopmode',
-      },
     }
+    -- }
+    -- }
   end,
 }

@@ -2,7 +2,7 @@
 return {
   {
     -- Detect tabstop and shiftwidth automatically
-    'tpope/vim-sleuth',
+    -- 'tpope/vim-sleuth',
   },
   {
     -- Powerful Git integration for Vim
@@ -10,11 +10,12 @@ return {
   },
   {
     -- GitHub intration for vim-fugitive
-    'tpope/vim-rhubarb',
+    -- 'tpope/vim-rhubarb',
   },
   {
     -- Hints keybinds
     'folke/which-key.nvim',
+    event = 'VeryLazy',
   },
   {
     -- Autoclose parentheses, brackets, quotes, etc.
@@ -26,13 +27,14 @@ return {
   {
     -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
-    event = 'VimEnter',
+    event = 'BufReadPre',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
   {
     -- High-performance color highlighter
     'norcalli/nvim-colorizer.lua',
+    event = 'VeryLazy',
     config = function()
       require('colorizer').setup()
     end,

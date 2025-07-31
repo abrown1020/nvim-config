@@ -26,7 +26,7 @@ require('lazy').setup {
   { import = 'plugins' },
   { import = 'plugins.lsp' },
   checker = {
-    enabled = true,
+    enabled = false,
     notify = false,
   },
   change_detection = {
@@ -37,8 +37,8 @@ require('lazy').setup {
 -- Configure pwsh
 vim.opt.shell = 'pwsh'
 vim.opt.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command'
-vim.opt.shellquote = ''
-vim.opt.shellxquote = ''
+-- vim.opt.shellquote = ''
+-- vim.opt.shellxquote = ''
 
 local shada_path = vim.fn.stdpath 'data' .. '/shada'
 local glob_pattern = shada_path .. '/main.shada.tmp.*'
@@ -51,19 +51,29 @@ end
 vim.opt.winbar = "%{%v:lua.require'breadcrumbs'.get_winbar()%}"
 vim.opt.showtabline = 0
 
+vim.o.termguicolors = true
+require('core.colors').apply()
+
+-- require('nvim-web-devicons').set_icon {
+--   rs = {
+--     icon = '🦀',
+--     color = '#ff6c6b',
+--     name = 'Rs',
+--   },
+-- }
 -- Create (or clear) an augroup for our TeX wrapping settings
-vim.api.nvim_create_augroup('TeXWrap', { clear = true })
+-- vim.api.nvim_create_augroup('TeXWrap', { clear = true })
 
 -- Whenever a TeX buffer is opened...
-vim.api.nvim_create_autocmd('FileType', {
-  group = 'TeXWrap',
-  pattern = { 'tex', 'plaintex' },
-  callback = function()
-    -- enable visual line wrapping
-    vim.opt_local.wrap = true
-    -- break at word boundaries, not mid-word
-    vim.opt_local.linebreak = true
-    -- preserve indent for wrapped lines
-    vim.opt_local.breakindent = true
-  end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   group = 'TeXWrap',
+--   pattern = { 'tex', 'plaintex' },
+--   callback = function()
+--     -- enable visual line wrapping
+--     vim.opt_local.wrap = true
+--     -- break at word boundaries, not mid-word
+--     vim.opt_local.linebreak = true
+--     -- preserve indent for wrapped lines
+--     vim.opt_local.breakindent = true
+--   end,
+-- })

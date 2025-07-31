@@ -1,0 +1,65 @@
+-- lua/plugins/lint-lacheck.lua
+return {
+  -- 'mfussenegger/nvim-lint',
+  -- event = { 'BufReadPost', 'BufNewFile' },
+  -- config = function()
+  --   local lint = require 'lint'
+  --
+  --   -- --- Define the lacheck linter -----------------------------------------
+  --   lint.linters.lacheck = {
+  --     cmd = 'lacheck', -- Ensure it's on PATH (MiKTeX/TeX Live)
+  --     stdin = false, -- lacheck expects a filename, not stdin
+  --     args = {}, -- no useful flags to add here
+  --     ignore_exitcode = true, -- lacheck returns nonzero even for warnings
+  --     parser = function(output, bufnr)
+  --       local severities = vim.diagnostic.severity
+  --       local diags = {}
+  --
+  --       -- Typical lacheck line: "file.tex:123: Message ..."
+  --       for _, line in ipairs(vim.split(output, '\n', { plain = true, trimempty = true })) do
+  --         local _, lnum, msg = line:match '^([^:]+):(%d+):%s*(.+)$'
+  --         if lnum and msg then
+  --           table.insert(diags, {
+  --             lnum = tonumber(lnum) - 1,
+  --             col = 0,
+  --             end_lnum = tonumber(lnum) - 1,
+  --             end_col = 0,
+  --             severity = severities.WARN,
+  --             source = 'lacheck',
+  --             message = msg,
+  --           })
+  --         end
+  --       end
+  --       return diags
+  --     end,
+  --   }
+  --
+  --   -- --- Attach lacheck to TeX-like filetypes ------------------------------
+  --   lint.linters_by_ft = {
+  --     tex = { 'lacheck' },
+  --     plaintex = { 'lacheck' },
+  --     context = { 'lacheck' },
+  --   }
+  --
+  --   -- --- Autolint (tune the events to your preference) ---------------------
+  --   local aug = vim.api.nvim_create_augroup('NvimLintLaCheck', { clear = true })
+  --   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+  --     group = aug,
+  --     callback = function()
+  --       -- Only try when there is a registered linter
+  --       require('lint').try_lint()
+  --     end,
+  --   })
+  --
+  --   -- --- Optional: expose a :LaCheck and <leader>ll ------------------------
+  --   vim.api.nvim_create_user_command('LaCheck', function()
+  --     require('lint').try_lint 'lacheck'
+  --     -- If you like having a loclist:
+  --     -- vim.diagnostic.setloclist({ open = true })  -- or open=false + :lopen manually
+  --   end, { desc = 'Run lacheck via nvim-lint' })
+  --
+  --   vim.keymap.set('n', '<leader>li', function()
+  --     require('lint').try_lint 'lacheck'
+  --   end, { desc = 'Run lacheck (nvim-lint)' })
+  -- end,
+}

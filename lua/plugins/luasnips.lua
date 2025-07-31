@@ -1,5 +1,6 @@
 return {
   'L3MON4D3/LuaSnip',
+  event = 'BufReadPre',
   version = 'v2.*', -- use latest stable
   build = 'make install_jsregexp',
   dependencies = {
@@ -12,10 +13,10 @@ return {
     local tex_snip_path = vim.fn.stdpath 'config' .. '/lua/snippets/tex'
 
     -- Load friendly-snippets (VSCode format)
-    require('luasnip.loaders.from_vscode').load()
+    require('luasnip.loaders.from_vscode').lazy_load()
 
     -- Lazy load Lua snippets
-    require('luasnip.loaders.from_lua').load {
+    require('luasnip.loaders.from_lua').lazy_load {
       -- paths = { tex_snip_path },
       paths = { vim.fn.stdpath 'config' .. '/lua/snippets' },
     }

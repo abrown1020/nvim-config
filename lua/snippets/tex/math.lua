@@ -65,6 +65,17 @@ local generate_cases = function(args, snip)
   return sn(nil, nodes)
 end
 
-M = {}
+M = {
+  autosnippet(
+    { trig = '==', name = '&= align', dscr = '&= align' },
+    fmta(
+      [[
+    &<> <> \\
+    ]],
+      { c(1, { t '=', t '\\leq', i(1) }), i(2) }
+    ),
+    { condition = tex.in_align, show_condition = tex.in_align }
+  ),
+}
 
 return M

@@ -44,8 +44,8 @@ local brackets = {
   -- c = { 'brace', 'brace' },
   m = { '|', '|' },
   p = { '(', ')' },
-  v = { 'vert', 'vert' },
-  V = { 'Vert', 'Vert' },
+  v = { '\\vert', '\\vert' },
+  V = { '\\Vert', '\\Vert' },
 }
 
 M = {
